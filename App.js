@@ -1,10 +1,23 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, SafeAreaView, Text, View, Button, ScrollView, Image, Switch, TextInput } from 'react-native';
+// import { RegistrationScreen } from './components/RegistrationScreen/RegistrationScreen';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>?|?|?|!/\/\/\/</Text>
+      <Button />
+      <ScrollView />
+      <Image />
+      <Switch />
+      <TextInput />
+      {/* <SafeAreaView>
+        <TextInput
+          // style={styles.input}
+          // onChangeText={onChangeText}
+          // value={text}
+        />
+        </SafeAreaView> */}
       <StatusBar style="auto" />
     </View>
   );

@@ -1,24 +1,41 @@
-import { useFonts } from 'expo-font';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, SafeAreaView, View, Button, ScrollView, Image, Switch, TextInput } from 'react-native';
-import RegistrationScreen from './components/RegistrationScreen/RegistrationScreen';
+import { useFonts } from "expo-font";
+import { StatusBar } from "expo-status-bar";
+import photo_bg from "./Images/photo_bg.jpg";
+import {
+  StyleSheet,
+  SafeAreaView,
+  View,
+  Button,
+  ScrollView,
+  Image,
+  Switch,
+  TextInput,
+  ImageBackground
+} from "react-native";
+import RegistrationScreen from "./Screens/RegistrationScreen/RegistrationScreen";
 
 export default function App() {
   const [fontsLoaded] = useFonts({
-    'Roboto': require('./assets/fonts/Roboto-Medium.ttf'),
+    Roboto500: require("./assets/fonts/Roboto-Medium.ttf"),
+    Roboto400: require("./assets/fonts/Roboto-Regular.ttf"),
   });
   return (
     <View style={styles.container}>
-      <RegistrationScreen/>
+      <ImageBackground
+        source={photo_bg}
+        style={{ position: "absolute", width: "100%", height: "100%"}}
+      />
+        <RegistrationScreen />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    // position: "relative",
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#d3d2d0",
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
 });

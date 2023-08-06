@@ -3,7 +3,6 @@ import {
   Text,
   StyleSheet,
   View,
-  Image,
   TextInput,
   TouchableOpacity,
   ImageBackground,
@@ -12,9 +11,9 @@ import {
   Keyboard,
   Platform,
 } from "react-native";
+import * as Font from "expo-font";
 import {AntDesign} from '@expo/vector-icons';
 import photo_bg from "../../Images/photo_bg.jpg";
-
 
 const RegistrationScreen = () => {
   const [logIn, setLogIn] = React.useState("");
@@ -36,28 +35,31 @@ const RegistrationScreen = () => {
         setIsKeyboardOpen(false);
       }
     );
-
     return () => {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
     };
   }, []);
+  
   return (
     <View style={styles.screen}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ImageBackground source={photo_bg} style={styles.backgroundImg}>
           <KeyboardAvoidingView
             style={styles.wrap}
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            // keyboardVerticalOffset={Platform.OS === "ios" ? -170 : -135}
+            behavior={Platform.OS === "ios" ? "padding" : null}
+            keyboardVerticalOffset={Platform.OS === "ios" ? -170 : -10}
           >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               <View style={styles.form}>
                 <TouchableOpacity style={styles.userImgWrap}>
                   <AntDesign name={userPhoto ? "closecircleo" : "pluscircleo"}
-                    color={userPhoto ? "black" : "#FF6C00"} 
+                    color={userPhoto ? "#E8E8E8" : "#FF6C00"} 
                     style={styles.iconControlUserPhoto}
-                    size={25} />
+                    size={25} 
+                    onPress={() => {
+                      console.log(userPhoto ? "Видалити фото користувача" : "Додати фото користувача");
+                    }}/>
                 </TouchableOpacity>
                 <View style={styles.textWrap}>
                   <Text style={styles.title}>Реєстрація</Text>
@@ -83,7 +85,8 @@ const RegistrationScreen = () => {
                       style={styles.input}
                       placeholder="Пароль"
                       onChangeText={setPassword}
-                      keyboardType="numeric"
+                      keyboardType="default"
+                      secureTextEntry={true}
                       value={password}
                       autoCompleteType="off"
                     />
@@ -97,7 +100,7 @@ const RegistrationScreen = () => {
                     </TouchableOpacity>
                   </View>
                 </View>
-                {!isKeyboardOpen && (
+                {Platform.OS === 'ios' || !isKeyboardOpen ? (
                 <View style={styles.btnWrap}>
                   <TouchableOpacity
                     style={styles.submitBtn}
@@ -118,9 +121,7 @@ const RegistrationScreen = () => {
                     </Text>
                   </TouchableOpacity>
                 </View>
-                )}
-                {/* <Image source={homeSvg} /> */}
-                {/* <StatusBar style="auto" /> */}
+                 ) : null}
               </View>
             </TouchableWithoutFeedback>
           </KeyboardAvoidingView>
@@ -135,8 +136,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     maxWidth: 375,
-    heigth: "100%",
     alignSelf: "center",
+    backgroundColor: "#ffffff",
   },
   backgroundImg: {
     flex: 1,
@@ -149,11 +150,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
+    paddingTop: 92,
+    paddingBottom: 32,
     ...Platform.select({
-      ios: {
-        paddingTop: 92,
-        paddingBottom: 32,
-      },
       android: {
         paddingTop: 70,
         paddingBottom: 10,
@@ -166,12 +165,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#F6F6F6",
     left: 127,
     right: 128,
+    top: -60,
+    width: 120,
+    height: 120,
     ...Platform.select({
-      ios: {
-        top: -60,
-        width: 120,
-        height: 120,
-      },
       android: {
         top: -55,
         width: 110,
@@ -190,14 +187,12 @@ const styles = StyleSheet.create({
   },
   inputsWrap: {
     display: "flex",
+    gap: 16,
+    marginTop: 32,
     ...Platform.select({
-      ios: {
-        gap: 16,
-        marginTop: 32,
-      },
       android: {
-        gap: 10,
-        marginTop: 16,
+        gap: 8,
+        marginTop: 12,
       },
     }),
   },
@@ -216,6 +211,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     height: 40,
     padding: 10,
+    fontSize: 16,
     placeholderTextColor: "#BDBDBD",
   },
   passwordInputWrap: {
@@ -233,10 +229,8 @@ const styles = StyleSheet.create({
     color: "#1B4371",
   },
   btnWrap: {
+    marginTop: 43,
     ...Platform.select({
-      ios: {
-        marginTop: 43,
-      },
       android: {
         marginTop: 33,
       },
@@ -245,12 +239,10 @@ const styles = StyleSheet.create({
   submitBtn: {
     backgroundColor: "#FF6C00",
     borderRadius: 100,
+    height: 51,
+    paddingTop: 16,
+    paddingBottom: 16,
     ...Platform.select({
-      ios: {
-        height: 51,
-        paddingTop: 16,
-        paddingBottom: 16,
-      },
       android: {
         height: 44,
         paddingTop: 12,
@@ -268,10 +260,8 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     marginRight: "auto",
     marginTop: 16,
+    marginBottom: 45,
     ...Platform.select({
-      ios: {
-        marginBottom: 45,
-      },
       android: {
         marginBottom: 10,
       },

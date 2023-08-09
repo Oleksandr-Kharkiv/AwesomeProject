@@ -21,6 +21,7 @@ const RegistrationScreen = () => {
   const [password, setPassword] = React.useState("");
   const [isKeyboardOpen, setIsKeyboardOpen] = React.useState(false);
   const [userPhoto, setUserPhoto] = useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -40,7 +41,20 @@ const RegistrationScreen = () => {
       keyboardDidHideListener.remove();
     };
   }, []);
-  
+
+  const onRegistration = () => {
+    console.log("Registration form:", `{logIn: ${logIn}, email: ${email}, password: ${password}}`);
+  };
+
+  const handleShowPassword = () => {
+    setShowPassword(true);
+    console.log("Показати пароль:", `${password}`);
+  };
+
+  const handleHidePassword = () => {
+    setShowPassword(false);
+  };
+
   return (
     <View style={styles.screen}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -86,15 +100,14 @@ const RegistrationScreen = () => {
                       placeholder="Пароль"
                       onChangeText={setPassword}
                       keyboardType="default"
-                      secureTextEntry={true}
+                      secureTextEntry={!showPassword}
                       value={password}
                       autoCompleteType="off"
                     />
                     <TouchableOpacity
                       style={styles.showPasswordLink}
-                      onPress={() => {
-                        console.log("Показати");
-                      }}
+                      onPressIn={handleShowPassword}
+                      onPressOut={handleHidePassword}
                     >
                       <Text style={styles.showPasswordText}>Показати</Text>
                     </TouchableOpacity>
@@ -104,9 +117,7 @@ const RegistrationScreen = () => {
                 <View style={styles.btnWrap}>
                   <TouchableOpacity
                     style={styles.submitBtn}
-                    onPress={() => {
-                      console.log("Зареєстуватися");
-                    }}
+                    onPress={onRegistration}
                   >
                     <Text style={styles.btnTitle}>Зареєстуватися</Text>
                   </TouchableOpacity>

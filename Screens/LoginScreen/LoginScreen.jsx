@@ -18,6 +18,7 @@ const LoginScreen = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [isKeyboardOpen, setIsKeyboardOpen] = React.useState(false);
+  const [showPassword, setShowPassword] = React.useState(false);
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -38,7 +39,20 @@ const LoginScreen = () => {
       keyboardDidHideListener.remove();
     };
   }, []);
-  
+
+  const onLogIn = () => {
+    console.log("Login form:", `{email: ${email}, password: ${password}}`);
+  };
+
+  const handleShowPassword = () => {
+    setShowPassword(true);
+    console.log("Показати пароль:", `${password}`);
+  };
+
+  const handleHidePassword = () => {
+    setShowPassword(false);
+  };
+
   return (
     <View style={styles.screen}>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -68,44 +82,42 @@ const LoginScreen = () => {
                       placeholder="Пароль"
                       onChangeText={setPassword}
                       keyboardType="default"
-                      secureTextEntry={true}
+                      secureTextEntry={!showPassword}
                       value={password}
                       autoCompleteType="off"
                     />
                     <TouchableOpacity
                       style={styles.showPasswordLink}
-                      onPress={() => {
-                        console.log("Показати");
-                      }}
+                      onPressIn={handleShowPassword}
+                      onPressOut={handleHidePassword}
                     >
                       <Text style={styles.showPasswordText}>Показати</Text>
                     </TouchableOpacity>
                   </View>
                 </View>
-                {Platform.OS === 'ios' || !isKeyboardOpen ? (
-                <View style={styles.btnWrap}>
-                  <TouchableOpacity
-                    style={styles.submitBtn}
-                    onPress={() => {
-                      console.log("Увійти");
-                    }}
-                  >
-                    <Text style={styles.btnTitle}>Увійти</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.loginLink}
-                    onPress={() => {
-                      console.log("Немає акаунту? Зареєструватися");
-                    }}
-                  >
-                    <Text style={styles.loginLinkText}>
-                      Немає акаунту?{" "}
-                      <Text style={{textDecorationLine: "underline"}}>Зареєструватися</Text>
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                 ) : null}
-            
+                {Platform.OS === "ios" || !isKeyboardOpen ? (
+                  <View style={styles.btnWrap}>
+                    <TouchableOpacity
+                      style={styles.submitBtn}
+                      onPress={onLogIn}
+                    >
+                      <Text style={styles.btnTitle}>Увійти</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.loginLink}
+                      onPress={() => {
+                        console.log("Немає акаунту? Зареєструватися");
+                      }}
+                    >
+                      <Text style={styles.loginLinkText}>
+                        Немає акаунту?{" "}
+                        <Text style={{ textDecorationLine: "underline" }}>
+                          Зареєструватися
+                        </Text>
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
               </View>
             </TouchableWithoutFeedback>
           </KeyboardAvoidingView>
@@ -181,13 +193,13 @@ const styles = StyleSheet.create({
   btnWrap: {
     marginTop: 43,
     ...Platform.select({
-        ios: {
-            paddingBottom: 112,
-         },
-        android: {
-            paddingBottom: 72,
-        },
-      }),
+      ios: {
+        paddingBottom: 112,
+      },
+      android: {
+        paddingBottom: 72,
+      },
+    }),
   },
   submitBtn: {
     backgroundColor: "#FF6C00",

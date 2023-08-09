@@ -103,20 +103,20 @@ const LoginScreen = () => {
                     >
                       <Text style={styles.btnTitle}>Увійти</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.loginLink}
-                      onPress={() => {
-                        console.log("Немає акаунту? Зареєструватися");
-                      }}
-                    >
-                      <Text style={styles.loginLinkText}>
-                        Немає акаунту?{" "}
-                        <Text style={{ textDecorationLine: "underline" }}>
+                    <View style={styles.registrationLinkWrap}>
+                    <Text style={styles.registrationLinkText}>
+                      Немає акаунту?{" "}
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          console.log("Немає акаунту? Зареєструватися");
+                        }}
+                      >
+                        <Text style={styles.registrationLink}>
                           Зареєструватися
                         </Text>
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
+                      </TouchableOpacity>
+                  </View></View>
                 ) : null}
               </View>
             </TouchableWithoutFeedback>
@@ -215,9 +215,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#FFFFFF",
   },
-  loginLink: {
-    marginLeft: "auto",
-    marginRight: "auto",
+  registrationLinkWrap: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 16,
     marginBottom: 45,
     ...Platform.select({
@@ -226,7 +228,13 @@ const styles = StyleSheet.create({
       },
     }),
   },
-  loginLinkText: {
+  registrationLink: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#1B4371",
+    textDecorationLine: "underline",
+  },
+  registrationLinkText: {
     fontSize: 16,
     textAlign: "center",
     color: "#1B4371",

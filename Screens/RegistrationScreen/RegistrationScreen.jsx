@@ -121,16 +121,20 @@ const RegistrationScreen = () => {
                   >
                     <Text style={styles.btnTitle}>Зареєстуватися</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.loginLink}
-                    onPress={() => {
-                      console.log("Вже є акаунт? Увійти");
-                    }}
-                  >
+                        <View style={styles.loginLinkWrap}>
                     <Text style={styles.loginLinkText}>
-                      Вже є акаунт? Увійти
-                    </Text>
-                  </TouchableOpacity>
+                    Вже є акаунт?{" "}
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          console.log("Вже є акаунт? Увійти");
+                        }}
+                      >
+                        <Text style={styles.loginLink}>
+                        Увійти
+                        </Text>
+                      </TouchableOpacity>
+                  </View>
                 </View>
                  ) : null}
               </View>
@@ -267,9 +271,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#FFFFFF",
   },
-  loginLink: {
-    marginLeft: "auto",
-    marginRight: "auto",
+  loginLinkWrap: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 16,
     marginBottom: 45,
     ...Platform.select({
@@ -277,6 +283,12 @@ const styles = StyleSheet.create({
         marginBottom: 10,
       },
     }),
+  },
+  loginLink: {
+    fontSize: 16,
+    textAlign: "center",
+    color: "#1B4371",
+    textDecorationLine: "underline",
   },
   loginLinkText: {
     fontSize: 16,

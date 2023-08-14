@@ -12,6 +12,7 @@ import {
   Platform,
 } from "react-native";
 import * as Font from "expo-font";
+import { useNavigation } from '@react-navigation/native';
 import photo_bg from "../../Images/photo_bg.jpg";
 
 const LoginScreen = () => {
@@ -19,7 +20,8 @@ const LoginScreen = () => {
   const [password, setPassword] = React.useState("");
   const [isKeyboardOpen, setIsKeyboardOpen] = React.useState(false);
   const [showPassword, setShowPassword] = React.useState(false);
-
+  
+  
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
       "keyboardDidShow",
@@ -32,17 +34,20 @@ const LoginScreen = () => {
       () => {
         setIsKeyboardOpen(false);
       }
-    );
-
-    return () => {
-      keyboardDidShowListener.remove();
-      keyboardDidHideListener.remove();
+      );
+      
+      return () => {
+        keyboardDidShowListener.remove();
+        keyboardDidHideListener.remove();
+      };
+    }, []);
+    
+    const navigation = useNavigation();
+    
+    const onLogIn = () => {
+      navigation.navigate("Home");
+      console.log("Login form:", `{email: ${email}, password: ${password}}`);
     };
-  }, []);
-
-  const onLogIn = () => {
-    console.log("Login form:", `{email: ${email}, password: ${password}}`);
-  };
 
   const handleShowPassword = () => {
     setShowPassword(true);
@@ -112,7 +117,8 @@ const LoginScreen = () => {
                           console.log("Немає акаунту? Зареєструватися");
                         }}
                       >
-                        <Text style={styles.registrationLink}>
+                        <Text style={styles.registrationLink} 
+                        onPress = {() => navigation.navigate("Registration")}>
                           Зареєструватися
                         </Text>
                       </TouchableOpacity>

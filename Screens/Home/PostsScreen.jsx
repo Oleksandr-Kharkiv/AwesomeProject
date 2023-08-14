@@ -7,28 +7,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import * as Font from "expo-font";
-import { MaterialIcons } from "@expo/vector-icons";
 import authorPhoto from "../../Images/authorPhoto.jpg";
 
 const PostsScreen = () => {
   return (
     <View style={styles.screen}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Публікації</Text>
-        <TouchableOpacity
-          style={styles.wrapIconLogOut}
-          onPress={() => {
-            console.log("Logout");
-          }}
-        >
-          <MaterialIcons
-            name="logout"
-            size={24}
-            color="#BDBDBD"
-            style={styles.iconLogOut}
-          />
-        </TouchableOpacity>
-      </View>
       <View style={styles.body}>
         <TouchableOpacity style={styles.publicationAuthorWrap} onPress={() => {
                       console.log("Natali Romanova");

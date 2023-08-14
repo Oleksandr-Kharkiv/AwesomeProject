@@ -12,7 +12,8 @@ import {
   Platform,
 } from "react-native";
 import * as Font from "expo-font";
-import {AntDesign} from '@expo/vector-icons';
+import { useNavigation } from "@react-navigation/native";
+import { AntDesign } from "@expo/vector-icons";
 import photo_bg from "../../Images/photo_bg.jpg";
 
 const RegistrationScreen = () => {
@@ -42,8 +43,14 @@ const RegistrationScreen = () => {
     };
   }, []);
 
+  const navigation = useNavigation();
+
   const onRegistration = () => {
-    console.log("Registration form:", `{logIn: ${logIn}, email: ${email}, password: ${password}}`);
+    navigation.navigate("Home");
+    console.log(
+      "Registration form:",
+      `{logIn: ${logIn}, email: ${email}, password: ${password}}`
+    );
   };
 
   const handleShowPassword = () => {
@@ -67,13 +74,19 @@ const RegistrationScreen = () => {
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               <View style={styles.form}>
                 <TouchableOpacity style={styles.userImgWrap}>
-                  <AntDesign name={userPhoto ? "closecircleo" : "pluscircleo"}
-                    color={userPhoto ? "#E8E8E8" : "#FF6C00"} 
+                  <AntDesign
+                    name={userPhoto ? "closecircleo" : "pluscircleo"}
+                    color={userPhoto ? "#E8E8E8" : "#FF6C00"}
                     style={styles.iconControlUserPhoto}
-                    size={25} 
+                    size={25}
                     onPress={() => {
-                      console.log(userPhoto ? "Видалити фото користувача" : "Додати фото користувача");
-                    }}/>
+                      console.log(
+                        userPhoto
+                          ? "Видалити фото користувача"
+                          : "Додати фото користувача"
+                      );
+                    }}
+                  />
                 </TouchableOpacity>
                 <View style={styles.textWrap}>
                   <Text style={styles.title}>Реєстрація</Text>
@@ -113,30 +126,31 @@ const RegistrationScreen = () => {
                     </TouchableOpacity>
                   </View>
                 </View>
-                {Platform.OS === 'ios' || !isKeyboardOpen ? (
-                <View style={styles.btnWrap}>
-                  <TouchableOpacity
-                    style={styles.submitBtn}
-                    onPress={onRegistration}
-                  >
-                    <Text style={styles.btnTitle}>Зареєстуватися</Text>
-                  </TouchableOpacity>
-                        <View style={styles.loginLinkWrap}>
-                    <Text style={styles.loginLinkText}>
-                    Вже є акаунт?{" "}
-                      </Text>
+                {Platform.OS === "ios" || !isKeyboardOpen ? (
+                  <View style={styles.btnWrap}>
+                    <TouchableOpacity
+                      style={styles.submitBtn}
+                      onPress={onRegistration}
+                    >
+                      <Text style={styles.btnTitle}>Зареєстуватися</Text>
+                    </TouchableOpacity>
+                    <View style={styles.loginLinkWrap}>
+                      <Text style={styles.loginLinkText}>Вже є акаунт? </Text>
                       <TouchableOpacity
                         onPress={() => {
                           console.log("Вже є акаунт? Увійти");
                         }}
                       >
-                        <Text style={styles.loginLink}>
-                        Увійти
+                        <Text
+                          style={styles.loginLink}
+                          onPress={() => navigation.navigate("Login")}
+                        >
+                          Увійти
                         </Text>
                       </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
-                 ) : null}
+                ) : null}
               </View>
             </TouchableWithoutFeedback>
           </KeyboardAvoidingView>
@@ -272,10 +286,10 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
   },
   loginLinkWrap: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 16,
     marginBottom: 45,
     ...Platform.select({

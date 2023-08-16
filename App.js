@@ -1,5 +1,4 @@
 import 'react-native-gesture-handler';
-import { StyleSheet, View } from "react-native";
 import * as Font from "expo-font";
 import { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
@@ -16,8 +15,8 @@ export default function App() {
   useEffect(() => {
     const loadFonts = async () => {
       await Font.loadAsync({
-        Roboto500: require("./assets/fonts/Roboto-Medium.ttf"),
-        Roboto400: require("./assets/fonts/Roboto-Regular.ttf"),
+        "Roboto500": require("./assets/fonts/Roboto-Medium.ttf"),
+        "Roboto400": require("./assets/fonts/Roboto-Regular.ttf"),
       });
       
       setFontLoaded(true);

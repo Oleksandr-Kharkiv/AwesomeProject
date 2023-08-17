@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import * as Font from "expo-font";
 import { Feather, MaterialIcons, Octicons } from "@expo/vector-icons";
-import postPhoto_1 from "../../Images/img_23.jpg";
+import postPhoto_1 from "../../images/img_23.jpg";
 
 const CreatePostsScreen = () => {
   return (

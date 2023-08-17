@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import * as Font from "expo-font";
 import { MaterialIcons } from "@expo/vector-icons";
-import authorPhoto from "../../Images/authorPhoto.jpg";
+import authorPhoto from "../../images/authorPhoto.jpg";
 
 const CommentsScreen = () => {
   return (

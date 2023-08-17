@@ -14,7 +14,7 @@ import {
 import * as Font from "expo-font";
 import { useNavigation } from "@react-navigation/native";
 import { AntDesign } from "@expo/vector-icons";
-import photo_bg from "../../Images/photo_bg.jpg";
+import photo_bg from "../../images/photo_bg.jpg";
 
 const RegistrationScreen = () => {
   const [logIn, setLogIn] = React.useState("");

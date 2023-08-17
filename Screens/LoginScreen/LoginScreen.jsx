@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import * as Font from "expo-font";
 import { useNavigation } from '@react-navigation/native';
-import photo_bg from "../../Images/photo_bg.jpg";
+import photo_bg from "../../images/photo_bg.jpg";
 
 const LoginScreen = () => {
   const [email, setEmail] = React.useState("");

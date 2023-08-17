@@ -2,9 +2,10 @@ import React from "react";
 import {Text, StyleSheet, View, Image, TouchableOpacity,
   ScrollView, ImageBackground, } from "react-native";
 import * as Font from "expo-font";
-import authorPhoto from "../../Images/authorPhoto.jpg";
-import postPhoto_1 from "../../Images/img_23.jpg";
-import postPhoto_2 from "../../Images/img_24.jpg";
+import authorPhoto from "../../images/authorPhoto.jpg";
+import postPhoto_1 from "../../images/img_23.jpg";
+import postPhoto_2 from "../../images/img_24.jpg";
+import postPhoto_3 from "../../images/img_25.jpg";
 import { Feather, Octicons } from "@expo/vector-icons";
 
 const PostsScreen = () => {
@@ -64,11 +65,31 @@ const PostsScreen = () => {
                 style={styles.postLocationIcon}
               />
               <Text style={styles.postLocation}>
-                Ukraine
+              Crimea, Ukraine
               </Text>
             </View>
           </View>
         </View>
+        <View style={styles.post}>
+              <ImageBackground source={postPhoto_3} style={styles.postPhoto} />
+              <View style={styles.nameWrap}>
+                <Text style={styles.postName}>Старий будиночок у Венеції</Text>
+              </View>
+              <View style={styles.wrapper}>
+                <View style={styles.reactionWrap}>
+                  <Feather name="message-circle" size={24} color="#BDBDBD" />
+                  <Text>50</Text>
+                </View>
+                <View style={styles.locationWrap}>
+                  <Octicons
+                    name="location"
+                    size={24}
+                    style={styles.postLocationIcon}
+                  />
+                  <Text style={styles.postLocation}>Venice, Italy</Text>
+                </View>
+              </View>
+            </View>
       </ScrollView>
     </View>
   );
@@ -112,6 +133,7 @@ const styles = StyleSheet.create({
   author: {
     position: "relative",
     paddingTop: 32,
+    paddingBottom: 32,
     paddingLeft: 16,
     paddingRight: 16,
     backgroundColor: "#ffffff",
@@ -137,7 +159,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   post: {
-    marginTop: 32,
+    marginBottom: 32,
     position: "relative",
     paddingLeft: 16,
     paddingRight: 16,

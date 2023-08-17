@@ -208,6 +208,7 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto500",
     fontSize: 16,
     fontWeight: 500,
+    textDecorationLine: 'underline',
   },
   postLocationIcon: {
     color: "#BDBDBD",

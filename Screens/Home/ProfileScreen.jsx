@@ -10,7 +10,7 @@ import {
   Image,
 } from "react-native";
 import * as Font from "expo-font";
-import { AntDesign, Feather, Octicons, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, Feather, Octicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
 import photo_bg from "../../images/photo_bg.jpg";
 import profileUserPhoto from "../../images/userPhoto.jpg";
 import postPhoto_1 from "../../images/img_23.jpg";
@@ -22,7 +22,7 @@ const ProfileScreen = () => {
   return (
     <View style={styles.screen}>
       <ImageBackground source={photo_bg} style={styles.backgroundImg}>
-        <ScrollView>
+        <ScrollView style={styles.scroll}>
           <View style={styles.profile}>
               <View style={styles.profileUserPhotoWrap}>
               <Image
@@ -61,18 +61,19 @@ const ProfileScreen = () => {
               <Text style={styles.title}>Natali Romanova</Text>
             </View>
             <View style={styles.post}>
-              <ImageBackground source={postPhoto_1} style={styles.postPhoto} />
+              <Image source={postPhoto_1} style={styles.postPhoto} />
               <View style={styles.nameWrap}>
                 <Text style={styles.postName}>Ліс</Text>
               </View>
               <View style={styles.wrapper}>
                 <View style={styles.reactionsWrap}>
                   <View style={styles.reactionWrap}>
-                    <Feather name="message-circle" size={24} color="#BDBDBD" />
-                    <Text>0</Text>
+                  <FontAwesome name="comment" size={24} color="#FF6C00" />
+                  {/* <FontAwesome name="comment-o" size={24} color="#BDBDBD" />           */}
+                    <Text>8</Text>
                   </View>
                   <View style={styles.reactionWrap}>
-                    <AntDesign name="like2" size={24} color="#FF6C00" />
+                    <AntDesign name="like2" size={24} color="#FF6C00"/>
                     <Text>153</Text>
                   </View>
                 </View>
@@ -87,14 +88,15 @@ const ProfileScreen = () => {
               </View>
             </View>
             <View style={styles.post}>
-              <ImageBackground source={postPhoto_2} style={styles.postPhoto} />
+              <Image source={postPhoto_2} style={styles.postPhoto} />
               <View style={styles.nameWrap}>
                 <Text style={styles.postName}>Захід на Чорному морі</Text>
               </View>
               <View style={styles.wrapper}>
                 <View style={styles.reactionsWrap}>
                   <View style={styles.reactionWrap}>
-                    <Feather name="message-circle" size={24} color="#BDBDBD" />
+                  <FontAwesome name="comment" size={24} color="#FF6C00" />
+                    {/* <Feather name="message-circle" size={24} color="#BDBDBD" /> */}
                     <Text>3</Text>
                   </View>
                   <View style={styles.reactionWrap}>
@@ -113,14 +115,15 @@ const ProfileScreen = () => {
               </View>
             </View>
             <View style={styles.post}>
-              <ImageBackground source={postPhoto_3} style={styles.postPhoto} />
+              <Image source={postPhoto_3} style={styles.postPhoto} />
               <View style={styles.nameWrap}>
                 <Text style={styles.postName}>Старий будиночок у Венеції</Text>
               </View>
               <View style={styles.wrapper}>
                 <View style={styles.reactionsWrap}>
                   <View style={styles.reactionWrap}>
-                    <Feather name="message-circle" size={24} color="#BDBDBD" />
+                  <FontAwesome name="comment" size={24} color="#FF6C00" />
+                    {/* <Feather name="message-circle" size={24} color="#BDBDBD" /> */}
                     <Text>50</Text>
                   </View>
                   <View style={styles.reactionWrap}>
@@ -150,14 +153,18 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     maxWidth: 375,
-    // alignSelf: "center",
+    justifyContent: "flex-end",
     backgroundColor: "#ffffff",
   },
   backgroundImg: {
     flex: 1,
-    // justifyContent: "flex-end",
+    justifyContent: "flex-end",
+  },
+  scroll: {
+    flex: 0,
   },
   profile: {
+    flex: 1,
     position: "relative",
     marginTop: 147,
     paddingLeft: 16,
@@ -192,6 +199,7 @@ const styles = StyleSheet.create({
     }),
   },
   profileUserPhoto: {
+    borderRadius: 16,
     width: 120,
     height: 120,
     ...Platform.select({
@@ -226,8 +234,6 @@ const styles = StyleSheet.create({
   post: {
     marginBottom: 32,
     position: "relative",
-    paddingLeft: 16,
-    paddingRight: 16,
     display: "flex",
     gap: 8,
     backgroundColor: "#ffffff",
@@ -237,6 +243,11 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     width: "100%",
     height: 240,
+    ...Platform.select({
+      android: {
+        overflow: "hidden",
+      },
+    }),
   },
   nameWrap: {
     margin: 0,
@@ -287,6 +298,7 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto500",
     fontSize: 16,
     fontWeight: 500,
+    textDecorationLine: 'underline',
   },
   postLocationIcon: {
     color: "#BDBDBD",

@@ -29,17 +29,6 @@ const MapScreen = () => {
           />
         </TouchableOpacity>
       </View>
-      <View style={styles.body}>
-        <TouchableOpacity style={styles.publicationAuthorWrap} onPress={() => {
-                      console.log("Natali Romanova");
-                    }}>
-          <Image source={authorPhoto} style={styles.authorPhoto} />
-          <View style={styles.wrap} >
-          <Text style={styles.authorLogin}>Natali Romanova</Text>
-          <Text style={styles.authorEmail}>email@example.com</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
     </View>
   );
 };
@@ -79,36 +68,6 @@ const styles = StyleSheet.create({
     right: 16,
     bottom: 10,
   },
-  body: {
-    position: "relative",
-    paddingTop: 32,
-    paddingBottom: 32,
-    paddingLeft: 16,
-    paddingRight: 16,
-    backgroundColor: "#ffffff",
-  },
-  publicationAuthorWrap: {
-    display: 'flex',
-    flexDirection: 'row',
-    gap: 8,
-  },
-  authorPhoto: {
-    width: 60,
-    height: 60,
-    borderRadius: 16,
-  },
-  wrap: {
-    justifyContent: 'center',
-  },
-  authorLogin: {
-    fontSize: 13,
-    fontWeight: 700,
-
-  },
-  authorEmail: {
-    borderRadius: 16,
-  },
-
 });
 
 export default MapScreen;

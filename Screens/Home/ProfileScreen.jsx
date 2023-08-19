@@ -10,53 +10,56 @@ import {
   Image,
 } from "react-native";
 import * as Font from "expo-font";
-import { AntDesign, Feather, Octicons, MaterialIcons, FontAwesome } from "@expo/vector-icons";
+import {
+  AntDesign,
+  Octicons,
+  MaterialIcons,
+  FontAwesome,
+} from "@expo/vector-icons";
 import photo_bg from "../../images/photo_bg.jpg";
 import profileUserPhoto from "../../images/userPhoto.jpg";
 import postPhoto_1 from "../../images/img_23.jpg";
 import postPhoto_2 from "../../images/img_24.jpg";
 import postPhoto_3 from "../../images/img_25.jpg";
+import { useNavigation } from "@react-navigation/native";
 
 const ProfileScreen = () => {
+  const navigation = useNavigation();
   // const [profileUserPhoto, setProfileUserPhoto] = useState(false);
   return (
     <View style={styles.screen}>
       <ImageBackground source={photo_bg} style={styles.backgroundImg}>
         <ScrollView style={styles.scroll}>
           <View style={styles.profile}>
-              <View style={styles.profileUserPhotoWrap}>
+            <View style={styles.profileUserPhotoWrap}>
               <Image
                 source={profileUserPhoto}
                 style={styles.profileUserPhoto}
               />
-            <TouchableOpacity >
-              <AntDesign
-                name={profileUserPhoto ? "closecircleo" : "pluscircleo"}
-                color={profileUserPhoto ? "#E8E8E8" : "#FF6C00"}
-                style={styles.iconControlUserPhoto}
-                size={25}
-                onPress={() => {
-                  console.log(
-                    profileUserPhoto
-                      ? "Видалити фото користувача"
-                      : "Додати фото користувача"
-                  );
-                }}
-              />
-            </TouchableOpacity>
-              </View>
-              <TouchableOpacity
-                style={styles.wrapIconLogOut}
-                onPress={() => {
-                  console.log("Logout");
-                }}
-              >
-                <MaterialIcons
-                  name="logout"
-                  size={24}
-                  color="#E8E8E8"
+              <TouchableOpacity>
+                <AntDesign
+                  name={profileUserPhoto ? "closecircleo" : "pluscircleo"}
+                  color={profileUserPhoto ? "#E8E8E8" : "#FF6C00"}
+                  style={styles.iconControlUserPhoto}
+                  size={25}
+                  onPress={() => {
+                    console.log(
+                      profileUserPhoto
+                        ? "Видалити фото користувача"
+                        : "Додати фото користувача"
+                    );
+                  }}
                 />
               </TouchableOpacity>
+            </View>
+            <TouchableOpacity
+              style={styles.wrapIconLogOut}
+              onPress={() => {
+                console.log("Logout");
+              }}
+            >
+              <MaterialIcons name="logout" size={24} color="#E8E8E8" />
+            </TouchableOpacity>
             <View style={styles.textWrap}>
               <Text style={styles.title}>Natali Romanova</Text>
             </View>
@@ -68,12 +71,18 @@ const ProfileScreen = () => {
               <View style={styles.wrapper}>
                 <View style={styles.reactionsWrap}>
                   <View style={styles.reactionWrap}>
-                  <FontAwesome name="comment" size={24} color="#FF6C00" />
-                  {/* <FontAwesome name="comment-o" size={24} color="#BDBDBD" />           */}
+                    <FontAwesome
+                      name="comment"
+                      size={24}
+                      color="#FF6C00"
+                      onPress={() => {
+                        navigation.navigate("CommentsScreen");
+                      }}
+                    />
                     <Text>8</Text>
                   </View>
                   <View style={styles.reactionWrap}>
-                    <AntDesign name="like2" size={24} color="#FF6C00"/>
+                    <AntDesign name="like2" size={24} color="#FF6C00" />
                     <Text>153</Text>
                   </View>
                 </View>
@@ -82,6 +91,9 @@ const ProfileScreen = () => {
                     name="location"
                     size={24}
                     style={styles.postLocationIcon}
+                    onPress={() => {
+                      navigation.navigate("MapScreen");
+                    }}
                   />
                   <Text style={styles.postLocation}>Ukraine</Text>
                 </View>
@@ -95,8 +107,14 @@ const ProfileScreen = () => {
               <View style={styles.wrapper}>
                 <View style={styles.reactionsWrap}>
                   <View style={styles.reactionWrap}>
-                  <FontAwesome name="comment" size={24} color="#FF6C00" />
-                    {/* <Feather name="message-circle" size={24} color="#BDBDBD" /> */}
+                    <FontAwesome
+                      name="comment"
+                      size={24}
+                      color="#FF6C00"
+                      onPress={() => {
+                        navigation.navigate("CommentsScreen");
+                      }}
+                    />
                     <Text>3</Text>
                   </View>
                   <View style={styles.reactionWrap}>
@@ -109,6 +127,9 @@ const ProfileScreen = () => {
                     name="location"
                     size={24}
                     style={styles.postLocationIcon}
+                    onPress={() => {
+                      navigation.navigate("MapScreen");
+                    }}
                   />
                   <Text style={styles.postLocation}>Ukraine</Text>
                 </View>
@@ -122,8 +143,14 @@ const ProfileScreen = () => {
               <View style={styles.wrapper}>
                 <View style={styles.reactionsWrap}>
                   <View style={styles.reactionWrap}>
-                  <FontAwesome name="comment" size={24} color="#FF6C00" />
-                    {/* <Feather name="message-circle" size={24} color="#BDBDBD" /> */}
+                    <FontAwesome
+                      name="comment"
+                      size={24}
+                      color="#FF6C00"
+                      onPress={() => {
+                        navigation.navigate("CommentsScreen");
+                      }}
+                    />
                     <Text>50</Text>
                   </View>
                   <View style={styles.reactionWrap}>
@@ -136,6 +163,9 @@ const ProfileScreen = () => {
                     name="location"
                     size={24}
                     style={styles.postLocationIcon}
+                    onPress={() => {
+                      navigation.navigate("MapScreen");
+                    }}
                   />
                   <Text style={styles.postLocation}>Italy</Text>
                 </View>
@@ -298,7 +328,7 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto500",
     fontSize: 16,
     fontWeight: 500,
-    textDecorationLine: 'underline',
+    textDecorationLine: "underline",
   },
   postLocationIcon: {
     color: "#BDBDBD",

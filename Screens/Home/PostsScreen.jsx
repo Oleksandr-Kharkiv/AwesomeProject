@@ -1,14 +1,24 @@
 import React from "react";
-import {Text, StyleSheet, View, Image, TouchableOpacity,
-  ScrollView, ImageBackground, } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  ImageBackground,
+} from "react-native";
 import * as Font from "expo-font";
 import authorPhoto from "../../images/authorPhoto.jpg";
 import postPhoto_1 from "../../images/img_23.jpg";
 import postPhoto_2 from "../../images/img_24.jpg";
 import postPhoto_3 from "../../images/img_25.jpg";
-import { Feather, Octicons } from "@expo/vector-icons";
+import { FontAwesome, Octicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 const PostsScreen = () => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.screen}>
       <ScrollView>
@@ -32,15 +42,23 @@ const PostsScreen = () => {
             <Text style={styles.postName}>Ліс</Text>
           </View>
           <View style={styles.wrapper}>
-            <View style={styles.reactionWrap}>
-              <Feather name="message-circle" size={24} color="#BDBDBD" />
+            <TouchableOpacity
+              style={styles.reactionWrap}
+              onPress={() => {
+                navigation.navigate("CommentsScreen");
+              }}
+            >
+              <FontAwesome name="comment-o" size={24} color="#BDBDBD" />
               <Text>0</Text>
-            </View>
+            </TouchableOpacity>
             <View style={styles.locationWrap}>
               <Octicons
                 name="location"
                 size={24}
                 style={styles.postLocationIcon}
+                onPress={() => {
+                  navigation.navigate("MapScreen");
+                }}
               />
               <Text style={styles.postLocation}>
                 Ivano-Frankivs'k Region, Ukraine
@@ -54,42 +72,56 @@ const PostsScreen = () => {
             <Text style={styles.postName}>Захід на Чорному морі</Text>
           </View>
           <View style={styles.wrapper}>
-            <View style={styles.reactionWrap}>
-              <Feather name="message-circle" size={24} color="#BDBDBD" />
+            <TouchableOpacity
+              style={styles.reactionWrap}
+              onPress={() => {
+                navigation.navigate("CommentsScreen");
+              }}
+            >
+              <FontAwesome name="comment-o" size={24} color="#BDBDBD" />
               <Text>0</Text>
-            </View>
+            </TouchableOpacity>
             <View style={styles.locationWrap}>
               <Octicons
                 name="location"
                 size={24}
                 style={styles.postLocationIcon}
+                onPress={() => {
+                  navigation.navigate("MapScreen");
+                }}
               />
-              <Text style={styles.postLocation}>
-              Crimea, Ukraine
-              </Text>
+              <Text style={styles.postLocation}>Crimea, Ukraine</Text>
             </View>
           </View>
         </View>
         <View style={styles.post}>
-              <ImageBackground source={postPhoto_3} style={styles.postPhoto} />
-              <View style={styles.nameWrap}>
-                <Text style={styles.postName}>Старий будиночок у Венеції</Text>
-              </View>
-              <View style={styles.wrapper}>
-                <View style={styles.reactionWrap}>
-                  <Feather name="message-circle" size={24} color="#BDBDBD" />
-                  <Text>50</Text>
-                </View>
-                <View style={styles.locationWrap}>
-                  <Octicons
-                    name="location"
-                    size={24}
-                    style={styles.postLocationIcon}
-                  />
-                  <Text style={styles.postLocation}>Venice, Italy</Text>
-                </View>
-              </View>
+          <ImageBackground source={postPhoto_3} style={styles.postPhoto} />
+          <View style={styles.nameWrap}>
+            <Text style={styles.postName}>Старий будиночок у Венеції</Text>
+          </View>
+          <View style={styles.wrapper}>
+            <TouchableOpacity
+              style={styles.reactionWrap}
+              onPress={() => {
+                navigation.navigate("CommentsScreen");
+              }}
+            >
+              <FontAwesome name="comment-o" size={24} color="#BDBDBD" />
+              <Text>50</Text>
+            </TouchableOpacity>
+            <View style={styles.locationWrap}>
+              <Octicons
+                name="location"
+                size={24}
+                style={styles.postLocationIcon}
+                onPress={() => {
+                  navigation.navigate("MapScreen");
+                }}
+              />
+              <Text style={styles.postLocation}>Venice, Italy</Text>
             </View>
+          </View>
+        </View>
       </ScrollView>
     </View>
   );
@@ -208,7 +240,7 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto500",
     fontSize: 16,
     fontWeight: 500,
-    textDecorationLine: 'underline',
+    textDecorationLine: "underline",
   },
   postLocationIcon: {
     color: "#BDBDBD",

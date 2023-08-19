@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-import {Text, StyleSheet, View, Image, TouchableOpacity, TextInput, ScrollView, Platform,} from "react-native";
-import { Feather, Ionicons, MaterialIcons, Octicons } from "@expo/vector-icons";
+import {Text, StyleSheet, View, Image, TouchableOpacity, TextInput, ScrollView, Platform, ActivityIndicator} from "react-native";
+import { Feather, MaterialIcons, Octicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import { Camera } from "expo-camera";
 import { useNavigation } from "@react-navigation/native";
@@ -58,8 +58,8 @@ const CreatePostsScreen = () => {
 
   const publishPost = async () => {
     console.log("Опублікувати пост");
+    setIsPostSent(true);
     try {
-      setIsPostSent(true);
 
       const data = await Location.getCurrentPositionAsync({});
 
@@ -90,8 +90,8 @@ const CreatePostsScreen = () => {
         <View style={styles.postPhotoWrap}>
           {postPhoto ? (
             <Image source={{ uri: postPhoto }} style={styles.postPhoto} />
-          ) : (
-            <Camera
+            ) : (
+              <Camera
               style={styles.postPhoto}
               type={type}
               ref={(ref) => setCameraRef(ref)}
@@ -99,24 +99,25 @@ const CreatePostsScreen = () => {
               <TouchableOpacity
                 style={styles.photoCameraIconWrap}
                 onPress={takePhoto}
-              >
+                >
                 <MaterialIcons name="photo-camera" size={24} color="#ffffff" />
               </TouchableOpacity>
             </Camera>
           )}
           {postPhoto ? (
             <TouchableOpacity
-              onPress={() => {
-                setPostPhoto("");
-              }}
+            onPress={() => {
+              setPostPhoto("");
+            }}
             >
               <Text style={styles.editPostPhoto}>Редагувати фото</Text>
             </TouchableOpacity>
           ) : (
             <Text style={styles.editPostPhoto}>Завантажте фото</Text>
-          )}
+            )}
         </View>
         <View style={styles.postInputsWrap}>
+            {isPostSent &&  <ActivityIndicator style={styles.loader}/>}
           <View>
             <TextInput
               style={styles.postNameInput}
@@ -230,19 +231,19 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 240,
   },
-  cameraIconWrap: {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: [{ translateX: -30 }, { translateY: -30 }],
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: "rgba(1, 1, 1, 0.3)",
-  },
+  // cameraIconWrap: {
+  //   position: "absolute",
+  //   top: "50%",
+  //   left: "50%",
+  //   transform: [{ translateX: -30 }, { translateY: -30 }],
+  //   display: "flex",
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   width: 60,
+  //   height: 60,
+  //   borderRadius: 30,
+  //   backgroundColor: "rgba(1, 1, 1, 0.3)",
+  // },
   photoCameraIconWrap: {
     position: "absolute",
     top: "50%",
@@ -263,6 +264,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
   postInputsWrap: {
+    position: "relative",
     display: "flex",
     gap: 16,
     marginBottom: 32,
@@ -336,6 +338,21 @@ const styles = StyleSheet.create({
         marginTop: 80,
       },
     }),
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+  },
+  loader: {
+    position: "absolute", 
+    top: "50%", 
+    left: "50%", 
+    transform: [{ translateX: -10 }, { translateY: -30 }],
   },
 });
 

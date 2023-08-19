@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     height: 40,
     padding: 10,
     fontSize: 16,
-    placeholderTextColor: "#BDBDBD",
+    // placeholderTextColor: "#BDBDBD",
   },
   passwordInputWrap: {
     position: "relative",

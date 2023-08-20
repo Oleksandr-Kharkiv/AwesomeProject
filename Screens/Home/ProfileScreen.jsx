@@ -92,7 +92,12 @@ const ProfileScreen = () => {
                     size={24}
                     style={styles.postLocationIcon}
                     onPress={() => {
-                      navigation.navigate("MapScreen");
+                      navigation.navigate("MapScreen", { 
+                        location: {
+                        latitude: 48.92825,
+                        longitude: 24.7324,
+                      } 
+                    });
                     }}
                   />
                   <Text style={styles.postLocation}>Ukraine</Text>
@@ -128,7 +133,12 @@ const ProfileScreen = () => {
                     size={24}
                     style={styles.postLocationIcon}
                     onPress={() => {
-                      navigation.navigate("MapScreen");
+                      navigation.navigate("MapScreen", { 
+                        location: {
+                        latitude: 48.92825,
+                        longitude: 24.7324,
+                      } 
+                    });
                     }}
                   />
                   <Text style={styles.postLocation}>Ukraine</Text>
@@ -164,7 +174,12 @@ const ProfileScreen = () => {
                     size={24}
                     style={styles.postLocationIcon}
                     onPress={() => {
-                      navigation.navigate("MapScreen");
+                      navigation.navigate("MapScreen", { 
+                        location: {
+                        latitude: 48.92825,
+                        longitude: 24.7324,
+                      } 
+                    });
                     }}
                   />
                   <Text style={styles.postLocation}>Italy</Text>

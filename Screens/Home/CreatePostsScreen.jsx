@@ -1,6 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
-import {Text, StyleSheet, View, Image, TouchableOpacity, TextInput, ScrollView, Platform, ActivityIndicator} from "react-native";
-import { Feather, MaterialIcons, Octicons } from "@expo/vector-icons";
+import {
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Text,
+  StyleSheet,
+  View,
+  Image,
+  TouchableOpacity,
+  TextInput,
+  ScrollView,
+  Platform,
+  ActivityIndicator,
+  Keyboard,
+} from "react-native";
+import { Feather, Ionicons, MaterialIcons, Octicons } from "@expo/vector-icons";
 import * as Font from "expo-font";
 import { Camera } from "expo-camera";
 import { useNavigation } from "@react-navigation/native";
@@ -14,10 +27,13 @@ const CreatePostsScreen = () => {
   const [postPhoto, setPostPhoto] = useState(null);
   const [photoTitle, setPhotoTitle] = useState("");
   const [locationAdress, setLocationAdress] = useState("");
-  const [geoData, setGeoData] = useState(null);
+  const [location, setLocation] = useState(null);
   const [isPostSent, setIsPostSent] = useState(false);
-  const isMounted = useRef(true); // useRef для запобігання витоку пам'яті
+  const isMounted = useRef(true);
   const navigation = useNavigation();
+
+  const disabledBtn =
+    !postPhoto || !photoTitle || !locationAdress || isPostSent;
 
   useEffect(() => {
     (async () => {
@@ -60,20 +76,21 @@ const CreatePostsScreen = () => {
     console.log("Опублікувати пост");
     setIsPostSent(true);
     try {
-
-      const data = await Location.getCurrentPositionAsync({});
-
-      setGeoData({latitude: data.coords.latitude, longitude: data.coords.longitude});
-      setPostPhoto(null);
-      setPhotoTitle("");
-      setLocationAdress("");
+      const location = await Location.getCurrentPositionAsync({});
+      setLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
     } catch (error) {
       console.error("Помилка при опублікуванні посту:", error);
     } finally {
       setIsPostSent(false);
       navigation.navigate("PostsScreen");
+      setPostPhoto(null);
+      setPhotoTitle("");
+      setLocationAdress("");
+      // console.log("координати з location:", location);
     }
-    console.log(geoData);
   };
 
   const deletePost = () => {
@@ -81,94 +98,116 @@ const CreatePostsScreen = () => {
     setPostPhoto(null);
     setPhotoTitle("");
     setLocationAdress("");
-    setGeoData(null);
+    setLocation(null);
   };
 
   return (
     <ScrollView>
-      <View style={styles.post}>
-        <View style={styles.postPhotoWrap}>
-          {postPhoto ? (
-            <Image source={{ uri: postPhoto }} style={styles.postPhoto} />
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={styles.post}>
+          <View style={styles.postPhotoWrap}>
+            {postPhoto ? (
+              <Image source={{ uri: postPhoto }} style={styles.postPhoto} />
             ) : (
               <Camera
-              style={styles.postPhoto}
-              type={type}
-              ref={(ref) => setCameraRef(ref)}
-            >
-              <TouchableOpacity
-                style={styles.photoCameraIconWrap}
-                onPress={takePhoto}
+                style={styles.postPhoto}
+                type={type}
+                ref={(ref) => setCameraRef(ref)}
+              >
+                <TouchableOpacity
+                  style={styles.flipContainer}
+                  onPress={() => {
+                    setType(
+                      type === Camera.Constants.Type.back
+                        ? Camera.Constants.Type.front
+                        : Camera.Constants.Type.back
+                    );
+                  }}
                 >
-                <MaterialIcons name="photo-camera" size={24} color="#ffffff" />
-              </TouchableOpacity>
-            </Camera>
-          )}
-          {postPhoto ? (
-            <TouchableOpacity
-            onPress={() => {
-              setPostPhoto("");
-            }}
-            >
-              <Text style={styles.editPostPhoto}>Редагувати фото</Text>
-            </TouchableOpacity>
-          ) : (
-            <Text style={styles.editPostPhoto}>Завантажте фото</Text>
+                  <Ionicons
+                    name="camera-reverse-outline"
+                    size={24}
+                    color="#ffffff"
+                  />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.photoCameraIconWrap}
+                  onPress={takePhoto}
+                >
+                  <MaterialIcons
+                    name="photo-camera"
+                    size={24}
+                    color="#ffffff"
+                  />
+                </TouchableOpacity>
+              </Camera>
             )}
-        </View>
-        <View style={styles.postInputsWrap}>
-            {isPostSent &&  <ActivityIndicator style={styles.loader}/>}
-          <View>
-            <TextInput
-              style={styles.postNameInput}
-              placeholder="Назва..."
-              autoCompleteType="off"
-              value={photoTitle}
-              onChangeText={(text) => setPhotoTitle(text)}
-            />
+            {postPhoto ? (
+              <TouchableOpacity
+                onPress={() => {
+                  setPostPhoto("");
+                }}
+              >
+                <Text style={styles.editPostPhoto}>Редагувати фото</Text>
+              </TouchableOpacity>
+            ) : (
+              <Text style={styles.editPostPhoto}>Завантажте фото</Text>
+            )}
           </View>
-          <View style={styles.locationInputWrap}>
-            <TextInput
-              style={styles.postLocationInput}
-              placeholder="Місцевість..."
-              autoCompleteType="off"
-              value={locationAdress}
-              onChangeText={(text) => setLocationAdress(text)}
-            />
-            <Octicons
-              name="location"
-              size={24}
-              style={styles.postLocationIcon}
-            />
-          </View>
-        </View>
-        <TouchableOpacity
-          style={{
-            ...styles.publishPostBtn,
-            backgroundColor:
-              postPhoto && photoTitle && locationAdress && !isPostSent
-                ? "#FF6C00"
-                : "#F6F6F6",
-          }}
-          onPress={publishPost}
-          disabled={isPostSent}
-        >
-          <Text
-            style={{
-              ...styles.btnTitle,
-              color:
-                postPhoto && photoTitle && locationAdress && !isPostSent
-                  ? "#FFFFFF"
-                  : "#BDBDBD",
-            }}
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 0}
           >
-            Опублікувати
-          </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.deletePostBtn} onPress={deletePost}>
-          <Feather name="trash-2" size={24} color="#BDBDBD" />
-        </TouchableOpacity>
-      </View>
+            <View style={styles.postInputsWrap}>
+              {isPostSent && <ActivityIndicator style={styles.loader} />}
+              <View>
+                <TextInput
+                  style={styles.postNameInput}
+                  placeholder="Назва..."
+                  autoCompleteType="off"
+                  value={photoTitle}
+                  onChangeText={(text) => setPhotoTitle(text)}
+                />
+              </View>
+              <View style={styles.locationInputWrap}>
+                <TextInput
+                  style={styles.postLocationInput}
+                  placeholder="Місцевість..."
+                  autoCompleteType="off"
+                  value={locationAdress}
+                  onChangeText={(text) => setLocationAdress(text)}
+                />
+                <Octicons
+                  name="location"
+                  size={24}
+                  style={styles.postLocationIcon}
+                />
+              </View>
+            </View>
+          </KeyboardAvoidingView>
+          <TouchableOpacity
+            style={{
+              ...styles.publishPostBtn,
+              backgroundColor: disabledBtn ? "#F6F6F6" : "#FF6C00",
+            }}
+            onPress={publishPost}
+            disabled={disabledBtn}
+          >
+            <Text
+              style={{
+                ...styles.btnTitle,
+                color: disabledBtn ? "#BDBDBD" : "#FFFFFF",
+              }}
+            >
+              {!isPostSent ? "Опублікувати" : "Публікую"}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.deletePostBtn} onPress={deletePost}>
+            <Feather name="trash-2" size={24} color="#BDBDBD" />
+          </TouchableOpacity>
+        </View>
+      </TouchableWithoutFeedback>
     </ScrollView>
   );
 };
@@ -231,19 +270,12 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 240,
   },
-  // cameraIconWrap: {
-  //   position: "absolute",
-  //   top: "50%",
-  //   left: "50%",
-  //   transform: [{ translateX: -30 }, { translateY: -30 }],
-  //   display: "flex",
-  //   justifyContent: "center",
-  //   alignItems: "center",
-  //   width: 60,
-  //   height: 60,
-  //   borderRadius: 30,
-  //   backgroundColor: "rgba(1, 1, 1, 0.3)",
-  // },
+  flipContainer: {
+    marginTop: 5,
+    paddingRight: 10,
+    flex: 0.1,
+    alignSelf: "flex-end",
+  },
   photoCameraIconWrap: {
     position: "absolute",
     top: "50%",
@@ -341,17 +373,17 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   horizontal: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     padding: 10,
   },
   loader: {
-    position: "absolute", 
-    top: "50%", 
-    left: "50%", 
+    position: "absolute",
+    top: "50%",
+    left: "50%",
     transform: [{ translateX: -10 }, { translateY: -30 }],
   },
 });

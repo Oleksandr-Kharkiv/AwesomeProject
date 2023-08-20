@@ -6,7 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import PostsScreen from "./PostsScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
 import ProfileScreen from "./ProfileScreen";
-// import myTabBar from "./myTabBar";
+
 //// https://reactnavigation.org/docs/headers!!!!!!!!!!!
 
 const Tabs = createBottomTabNavigator();
@@ -24,8 +24,8 @@ const Home = () => {
             borderBottomColor: "rgba(0, 0, 0, 0.09)",
             elevation: 0,
           },
-          headerTitleAlign: 'center',
-          
+          headerTitleAlign: "center",
+
           headerTitleStyle: {
             fontSize: 17,
             fontFamily: "Roboto500",
@@ -33,22 +33,28 @@ const Home = () => {
             fontWeight: 500,
           },
           headerTitleContainerStyle: {
-            justifyContent: 'flex-end',
+            justifyContent: "flex-end",
             paddingBottom: 11,
           },
           headerLeftContainerStyle: {
-            alignItems: 'flex-start', 
-            justifyContent: 'flex-end',
+            alignItems: "flex-start",
+            justifyContent: "flex-end",
             paddingBottom: 5,
           },
           headerRightContainerStyle: {
-            alignItems: 'flex-end', 
-            justifyContent: 'flex-end',
+            alignItems: "flex-end",
+            justifyContent: "flex-end",
             paddingBottom: 5,
+          },
+          tabBarLabelStyle: {
+            display: "none"
+          },
+          tabBarStyle: {
+            display: "flex"
           },
           tabBarIcon: ({ focused, color }) => {
             let iconName;
-    
+
             if (route.name === "PostsScreen") {
               iconName = "grid";
             } else if (route.name === "CreatePostsScreen") {
@@ -60,7 +66,7 @@ const Home = () => {
               <View
                 style={[
                   styles.tabBarIconWrap,
-                  focused && styles.activeTabBarIconWrap
+                  focused && styles.activeTabBarIconWrap,
                 ]}
               >
                 <Feather
@@ -68,14 +74,13 @@ const Home = () => {
                   size={iconName === "plus" ? 20 : 24}
                   color={focused ? "#FFFFFF" : color}
                 />
-             </View> 
+              </View>
             );
           },
-        })
-      }
-      tabBarOptions={{
-        labelStyle: { display: "none" },
-      }}
+        })}
+        // tabBarOptions={{
+        //   labelStyle: { display: "none" },
+        // }}
       >
         <Tabs.Screen
           name="PostsScreen"
@@ -89,14 +94,10 @@ const Home = () => {
                   console.log("Logout");
                 }}
               >
-                <MaterialIcons
-                  name="logout"
-                  size={24}
-                  color="#BDBDBD"
-                />
+                <MaterialIcons name="logout" size={24} color="#BDBDBD" />
               </TouchableOpacity>
             ),
-            }}
+          }}
         />
         <Tabs.Screen
           name="CreatePostsScreen"
@@ -106,10 +107,11 @@ const Home = () => {
             headerLeft: () => (
               <TouchableOpacity
                 style={styles.wrapIconBack}
-                onPress={() => {console.log("Back on PostsScreen"); 
-                navigation.navigate("PostsScreen")
-                // navigation.goBack()
-              }}
+                onPress={() => {
+                  console.log("Back on PostsScreen");
+                  navigation.navigate("PostsScreen");
+                  // navigation.goBack()
+                }}
               >
                 <MaterialIcons
                   name="keyboard-backspace"
@@ -120,7 +122,7 @@ const Home = () => {
             ),
             tabBarStyle: {
               display: "none",
-          },
+            },
           }}
         />
         <Tabs.Screen

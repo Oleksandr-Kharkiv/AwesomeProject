@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Text,
-  StyleSheet,
-  View,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-  ImageBackground,
+import {Text, StyleSheet, View, Image, TouchableOpacity, ScrollView, ImageBackground,
 } from "react-native";
 import * as Font from "expo-font";
 import authorPhoto from "../../images/authorPhoto.jpg";
@@ -57,7 +50,12 @@ const PostsScreen = () => {
                 size={24}
                 style={styles.postLocationIcon}
                 onPress={() => {
-                  navigation.navigate("MapScreen");
+                  navigation.navigate("MapScreen", { 
+                    location: {
+                    latitude: 48.92825,
+                    longitude: 24.7324,
+                  } 
+                })
                 }}
               />
               <Text style={styles.postLocation}>
@@ -87,7 +85,12 @@ const PostsScreen = () => {
                 size={24}
                 style={styles.postLocationIcon}
                 onPress={() => {
-                  navigation.navigate("MapScreen");
+                  navigation.navigate("MapScreen", { 
+                    location: {
+                    latitude: 48.92825,
+                    longitude: 24.7324,
+                  } 
+                });
                 }}
               />
               <Text style={styles.postLocation}>Crimea, Ukraine</Text>
@@ -115,7 +118,12 @@ const PostsScreen = () => {
                 size={24}
                 style={styles.postLocationIcon}
                 onPress={() => {
-                  navigation.navigate("MapScreen");
+                  navigation.navigate("MapScreen", { 
+                    location: {
+                    latitude: 48.92825,
+                    longitude: 24.7324,
+                  } 
+                });
                 }}
               />
               <Text style={styles.postLocation}>Venice, Italy</Text>
